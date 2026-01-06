@@ -1,31 +1,22 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Swords, Dumbbell, Apple, Laptop, ArrowRight } from 'lucide-react';
+import { Apple, Dumbbell, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const services = [
   {
-    icon: Swords,
-    title: 'Artes Marciales',
-    description: 'Entrenamiento en disciplinas de combate como boxeo, kickboxing, MMA y defensa personal. Mejora tu técnica, agilidad y confianza.',
-    features: ['Técnicas de combate', 'Defensa personal', 'Preparación competitiva'],
+    icon: Apple,
+    title: 'Dietas Personalizadas',
+    description: 'Planes nutricionales adaptados a tus objetivos: pérdida de grasa, ganancia muscular o rendimiento deportivo. Diseñados específicamente para ti.',
+    href: '/dietas',
+    image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&q=80',
   },
   {
     icon: Dumbbell,
-    title: 'Entrenamiento Físico',
-    description: 'Programas de entrenamiento personalizados para ganar fuerza, resistencia y mejorar tu composición corporal de forma efectiva.',
-    features: ['Fuerza y potencia', 'Acondicionamiento', 'Entrenamiento funcional'],
-  },
-  {
-    icon: Apple,
-    title: 'Nutrición y Dietas',
-    description: 'Planes nutricionales adaptados a tus objetivos, ya sea pérdida de grasa, ganancia muscular o mejora del rendimiento deportivo.',
-    features: ['Planes personalizados', 'Suplementación', 'Seguimiento continuo'],
-  },
-  {
-    icon: Laptop,
-    title: 'Entrenamiento Online',
-    description: 'Entrena desde cualquier lugar con programas online, videollamadas en directo y seguimiento personalizado a distancia.',
-    features: ['Programas digitales', 'Sesiones en vivo', 'Flexibilidad total'],
+    title: 'Rutinas de Entrenamiento',
+    description: 'Programas de entrenamiento personalizados para todos los niveles. Desde principiantes hasta atletas de competición.',
+    href: '/rutinas',
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80',
   },
 ];
 
@@ -56,7 +47,7 @@ const ServicesSection = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="section-title text-hero-foreground mb-6"
           >
-            Entrenamiento integral para resultados reales
+            Elige tu camino hacia el éxito
           </motion.h2>
           
           <motion.p
@@ -65,54 +56,64 @@ const ServicesSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-hero-foreground/60 text-lg"
           >
-            Programas diseñados para potenciar tu rendimiento físico y mental, 
+            Programas diseñados para potenciar tu rendimiento físico, 
             adaptados a tus objetivos personales.
           </motion.p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+        {/* Services Grid - 2 Large Cards */}
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {services.map((service, index) => (
-            <motion.article
+            <motion.div
               key={service.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-              className="service-card group"
+              transition={{ duration: 0.7, delay: 0.2 + index * 0.15 }}
             >
-              <div className="flex items-start gap-5">
-                <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                  <service.icon className="w-7 h-7 text-primary" />
-                </div>
+              <Link 
+                to={service.href}
+                className="group block relative h-[450px] rounded-3xl overflow-hidden"
+              >
+                {/* Background Image */}
+                <div 
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  style={{ backgroundImage: `url(${service.image})` }}
+                />
                 
-                <div className="flex-1">
-                  <h3 className="font-display text-2xl text-hero-foreground mb-3">
-                    {service.title}
-                  </h3>
-                  
-                  <p className="text-hero-foreground/60 mb-5 leading-relaxed">
-                    {service.description}
-                  </p>
-                  
-                  <ul className="space-y-2 mb-6">
-                    {service.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-2 text-sm text-hero-foreground/70">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <a 
-                    href="#contacto" 
-                    className="inline-flex items-center gap-2 text-primary font-medium text-sm group/link"
-                  >
-                    Más información
-                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                  </a>
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-hero via-hero/60 to-transparent" />
+                
+                {/* Red glow on hover */}
+                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-500" />
+                
+                {/* Border */}
+                <div className="absolute inset-0 rounded-3xl border border-hero-foreground/10 group-hover:border-primary/50 transition-colors duration-500" />
+                
+                {/* Content */}
+                <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-end">
+                  <div className="transform transition-transform duration-500 group-hover:-translate-y-2">
+                    <div className="w-16 h-16 rounded-2xl bg-primary/20 backdrop-blur-sm flex items-center justify-center mb-6 group-hover:bg-primary/30 transition-colors">
+                      <service.icon className="w-8 h-8 text-primary" />
+                    </div>
+                    
+                    <h3 className="font-display text-4xl md:text-5xl text-hero-foreground mb-4">
+                      {service.title}
+                    </h3>
+                    
+                    <p className="text-hero-foreground/70 text-lg mb-6 max-w-md">
+                      {service.description}
+                    </p>
+                    
+                    <div className="inline-flex items-center gap-3 text-primary font-semibold group/cta">
+                      <span>Ver planes</span>
+                      <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center group-hover/cta:bg-primary/30 transition-all">
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </motion.article>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </div>
