@@ -74,7 +74,7 @@ const HeroSection = () => {
           >
             {[
               { number: '10+', label: 'Años de Experiencia' },
-              { number: '500+', label: 'Clientes Satisfechos' },
+              { number: '120+', label: 'Clientes Satisfechos' },
               { number: '100%', label: 'Compromiso' },
             ].map((stat) => (
               <div key={stat.label}>
@@ -87,17 +87,7 @@ const HeroSection = () => {
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <a href="#sobre-mi" className="flex flex-col items-center gap-2 text-hero-foreground/50 hover:text-primary transition-colors">
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <ChevronDown className="w-5 h-5 animate-bounce" />
-        </a>
-      </motion.div>
+
     </section>
   );
 };

@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import DietasPage from "./pages/DietasPage";
 import RutinasPage from "./pages/RutinasPage";
 import NotFound from "./pages/NotFound";
+import Header from "./components/Header";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/dietas" element={<DietasPage />} />
           <Route path="/rutinas" element={<RutinasPage />} />
+          <Route path="/inicio" element={<Index/>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,13 +1,10 @@
-import { Instagram, Facebook, Youtube, Linkedin } from 'lucide-react';
+import { Instagram} from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   const socialLinks = [
-    { icon: Instagram, href: '#', label: 'Instagram' },
-    { icon: Facebook, href: '#', label: 'Facebook' },
-    { icon: Youtube, href: '#', label: 'YouTube' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
+    { icon: Instagram, href: 'https://www.instagram.com/_.garrix._/?next=%2F', label: 'Instagram' },
   ];
 
   return (
