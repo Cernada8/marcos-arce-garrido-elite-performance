@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Award, Target, Users, Flame } from 'lucide-react';
+import marcosImage from '../assets/Marcos-pic.jpeg';
 
 const AboutSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [isHovered, setIsHovered] = useState(false);
 
   const highlights = [
     { icon: Award, label: 'Certificaciones Internacionales' },
@@ -24,19 +26,85 @@ const AboutSection = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
             className="relative"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           >
-            <div className="aspect-[4/5] rounded-2xl overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent z-10" />
-              <div className="w-full h-full bg-gradient-to-br from-secondary to-hero flex items-center justify-center">
-                <div className="text-center">
-                  <span className="font-display text-8xl md:text-9xl text-primary/20">MA</span>
-                </div>
-              </div>
+            <div className="aspect-[4/5] rounded-2xl overflow-hidden relative cursor-pointer">
+              {/* Gradient overlay */}
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent z-10"
+                animate={{
+                  opacity: isHovered ? 0.5 : 1
+                }}
+                transition={{ duration: 0.3 }}
+              />
+              
+              {/* Image container */}
+              <motion.div 
+                className="w-full h-full relative overflow-hidden"
+                animate={{
+                  scale: isHovered ? 1.05 : 1
+                }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <img 
+                  src={marcosImage} 
+                  alt="Marcos Arce Garrido - Entrenador Personal"
+                  className="w-full h-full object-cover object-center"
+                />
+              </motion.div>
+
+              {/* Hover border effect */}
+              <motion.div
+                className="absolute inset-0 border-4 border-primary rounded-2xl pointer-events-none"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{
+                  opacity: isHovered ? 1 : 0,
+                  scale: isHovered ? 1 : 0.95
+                }}
+                transition={{ duration: 0.3 }}
+              />
+
+              {/* Corner accent on hover */}
+              <motion.div
+                className="absolute top-4 right-4 w-16 h-16 border-t-4 border-r-4 border-primary rounded-tr-2xl pointer-events-none"
+                initial={{ opacity: 0, x: -10, y: 10 }}
+                animate={{
+                  opacity: isHovered ? 1 : 0,
+                  x: isHovered ? 0 : -10,
+                  y: isHovered ? 0 : 10
+                }}
+                transition={{ duration: 0.3 }}
+              />
+              <motion.div
+                className="absolute bottom-4 left-4 w-16 h-16 border-b-4 border-l-4 border-primary rounded-bl-2xl pointer-events-none"
+                initial={{ opacity: 0, x: 10, y: -10 }}
+                animate={{
+                  opacity: isHovered ? 1 : 0,
+                  x: isHovered ? 0 : 10,
+                  y: isHovered ? 0 : -10
+                }}
+                transition={{ duration: 0.3 }}
+              />
             </div>
             
-            {/* Floating accent */}
-            <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-primary/10 rounded-2xl -z-10" />
-            <div className="absolute -top-6 -left-6 w-32 h-32 border-2 border-primary/30 rounded-2xl -z-10" />
+            {/* Floating accents */}
+            <motion.div 
+              className="absolute -bottom-6 -right-6 w-48 h-48 bg-primary/10 rounded-2xl -z-10"
+              animate={{
+                scale: isHovered ? 1.1 : 1,
+                rotate: isHovered ? 5 : 0
+              }}
+              transition={{ duration: 0.4 }}
+            />
+            <motion.div 
+              className="absolute -top-6 -left-6 w-32 h-32 border-2 border-primary/30 rounded-2xl -z-10"
+              animate={{
+                scale: isHovered ? 1.1 : 1,
+                rotate: isHovered ? -5 : 0
+              }}
+              transition={{ duration: 0.4 }}
+            />
           </motion.div>
 
           {/* Content Side */}
