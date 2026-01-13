@@ -1,12 +1,35 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { supabaseAdmin } from '../../src/lib/supabase';
-import { generateToken } from '../../src/lib/jwt';
-import type { AuthResponse, RegisterRequest } from '../../src/types/auth';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { createClient } from '@supabase/supabase-js';
+import jwt from 'jsonwebtoken';
+
+// Inicializar Supabase Admin
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false
+  }
+});
 
 export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<AuthResponse>
+  req: VercelRequest,
+  res: VercelResponse
 ) {
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST,PUT');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization'
+  );
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({
       success: false,
@@ -15,7 +38,7 @@ export default async function handler(
   }
 
   try {
-    const { email, password }: RegisterRequest = req.body;
+    const { email, password } = req.body;
 
     // Validación básica
     if (!email || !password) {
@@ -51,7 +74,7 @@ export default async function handler(
     if (authError) {
       console.error('Error al crear usuario:', authError);
       
-      if (authError.message.includes('already registered')) {
+      if (authError.message.includes('already registered') || authError.message.includes('already been registered')) {
         return res.status(409).json({
           success: false,
           message: 'Este email ya está registrado'
@@ -71,22 +94,16 @@ export default async function handler(
       });
     }
 
-    // Verificar que se haya creado el profile
-    const { data: profile, error: profileError } = await supabaseAdmin
-      .from('profiles')
-      .select('*')
-      .eq('id', authData.user.id)
-      .single();
-
-    if (profileError) {
-      console.error('Error al verificar profile:', profileError);
-    }
-
     // Generar JWT
-    const token = generateToken({
-      userId: authData.user.id,
-      email: authData.user.email!
-    });
+    const jwtSecret = process.env.JWT_SECRET || 'tu-secret-super-seguro-cambiar';
+    const token = jwt.sign(
+      {
+        userId: authData.user.id,
+        email: authData.user.email!
+      },
+      jwtSecret,
+      { expiresIn: '7d' }
+    );
 
     return res.status(201).json({
       success: true,
