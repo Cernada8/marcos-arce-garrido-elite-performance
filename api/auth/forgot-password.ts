@@ -1,15 +1,39 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { supabaseAdmin } from '../../src/lib/supabase';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { createClient } from '@supabase/supabase-js';
 
 interface ResetPasswordResponse {
   success: boolean;
   message: string;
 }
 
+// Inicializar Supabase Admin
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false
+  }
+});
+
 export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<ResetPasswordResponse>
+  req: VercelRequest,
+  res: VercelResponse
 ) {
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST,PUT');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization'
+  );
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({
       success: false,
@@ -18,8 +42,7 @@ export default async function handler(
   }
 
   try {
-    const body = await getBody(req);
-    const { token, newPassword } = body || {};
+    const { token, newPassword } = req.body;
 
     if (!token || !newPassword) {
       return res.status(400).json({
@@ -71,19 +94,4 @@ export default async function handler(
       message: 'Error interno del servidor'
     });
   }
-}
-
-function getBody(req: NextApiRequest): Promise<any> {
-  return new Promise((resolve, reject) => {
-    let data = '';
-    req.on('data', (chunk: any) => (data += chunk));
-    req.on('end', () => {
-      try {
-        resolve(JSON.parse(data || '{}'));
-      } catch (e) {
-        reject(e);
-      }
-    });
-    req.on('error', reject);
-  });
 }
