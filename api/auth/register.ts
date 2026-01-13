@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { supabaseAdmin } from '../src/lib/supabase';
-import { generateToken } from '../src/lib/jwt';
-import type { AuthResponse, RegisterRequest } from '../src/types/auth';
+import { supabaseAdmin } from '../../src/lib/supabase';
+import { generateToken } from '../../src/lib/jwt';
+import type { AuthResponse, RegisterRequest } from '../../src/types/auth';
 
 export default async function handler(
   req: NextApiRequest,

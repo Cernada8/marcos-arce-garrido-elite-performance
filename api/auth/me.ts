@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { supabaseAdmin } from '../src/lib/supabase';
-import { verifyToken, extractTokenFromHeader } from '../src/lib/jwt';
-import type { UserProfile } from '../src/types/auth';
+import { supabaseAdmin } from '../../src/lib/supabase';
+import { verifyToken, extractTokenFromHeader } from '../../src/lib/jwt';
+import type { UserProfile } from '../../src/types/auth';
 
 interface MeResponse {
   success: boolean;

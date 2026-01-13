@@ -28,7 +28,7 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-primary font-semibold text-sm md:text-base uppercase tracking-widest mb-6"
           >
-            Entrenador Personal de Alto Rendimiento
+          
           </motion.p>
 
           <motion.h1
