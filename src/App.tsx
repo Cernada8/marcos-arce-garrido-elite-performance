@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import DietasPage from "./pages/DietasPage";
 import RutinasPage from "./pages/RutinasPage";
+import ResetPassword from "./components/ResetPassword";
 import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/dietas" element={<DietasPage />} />
           <Route path="/rutinas" element={<RutinasPage />} />
           <Route path="/inicio" element={<Index/>} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
