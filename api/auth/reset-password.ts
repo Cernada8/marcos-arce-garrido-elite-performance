@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 
-interface ForgotPasswordResponse {
+interface ResetPasswordResponse {
   success: boolean;
   message: string;
 }
@@ -19,12 +19,12 @@ const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
 
 export default async function handler(
   req: VercelRequest,
-  res: VercelResponse  // ← Sin el genérico
+  res: VercelResponse
 ) {
   // CORS headers
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST,PUT');
   res.setHeader(
     'Access-Control-Allow-Headers',
     'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization'
@@ -42,48 +42,53 @@ export default async function handler(
   }
 
   try {
-    const { email } = req.body;
+    const { token, newPassword } = req.body;
 
-    if (!email) {
+    if (!token || !newPassword) {
       return res.status(400).json({
         success: false,
-        message: 'El email es requerido'
+        message: 'Token y nueva contraseña son requeridos'
       });
     }
 
-    // Validar formato de email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (newPassword.length < 6) {
       return res.status(400).json({
         success: false,
-        message: 'Email inválido'
+        message: 'La contraseña debe tener al menos 6 caracteres'
       });
     }
 
-    // URL de redirección después del reset
-    const redirectUrl = `${process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000'}/reset-password`;
+    // Verificar el token de recuperación y obtener el usuario
+    const { data: { user }, error: verifyError } = await supabaseAdmin.auth.getUser(token);
 
-    // Enviar email de recuperación usando Supabase Auth
-    const { error } = await supabaseAdmin.auth.resetPasswordForEmail(email, {
-      redirectTo: redirectUrl,
-    });
+    if (verifyError || !user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Token inválido o expirado'
+      });
+    }
 
-    if (error) {
-      console.error('Error al enviar email de recuperación:', error);
-      // Por seguridad, no revelamos si el email existe o no
-      return res.status(200).json({
-        success: true,
-        message: 'Si el email existe en nuestro sistema, recibirás un enlace de recuperación'
+    // Actualizar la contraseña
+    const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(
+      user.id,
+      { password: newPassword }
+    );
+
+    if (updateError) {
+      console.error('Error al actualizar contraseña:', updateError);
+      return res.status(500).json({
+        success: false,
+        message: 'Error al actualizar la contraseña'
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: 'Si el email existe en nuestro sistema, recibirás un enlace de recuperación'
+      message: 'Contraseña actualizada exitosamente'
     });
 
   } catch (error) {
-    console.error('Error en forgot-password:', error);
+    console.error('Error en reset-password:', error);
     return res.status(500).json({
       success: false,
       message: 'Error interno del servidor'
