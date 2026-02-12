@@ -8,7 +8,7 @@ import DietasPage from "./pages/DietasPage";
 import RutinasPage from "./pages/RutinasPage";
 import ResetPassword from "./components/ResetPassword";
 import NotFound from "./pages/NotFound";
-import WhatsAppButton from "./components/WhatsappButton";
+import WhatsAppButton from "./components/WhatsAppButton";
 
 const queryClient = new QueryClient();
 
