@@ -10,7 +10,7 @@ const dietas = [
     id: 1,
     name: 'Plan Definición',
     description: 'Dieta enfocada en pérdida de grasa manteniendo masa muscular. Ideal para conseguir un físico definido.',
-    price: 49,
+    price: 39,
     period: 'mes',
     popular: false,
     features: [
@@ -25,7 +25,7 @@ const dietas = [
     id: 2,
     name: 'Plan Volumen',
     description: 'Dieta hipercalórica para ganancia muscular limpia. Maximiza tus resultados en el gimnasio.',
-    price: 59,
+    price: 49,
     period: 'mes',
     popular: true,
     features: [
@@ -41,7 +41,7 @@ const dietas = [
     id: 3,
     name: 'Plan Rendimiento',
     description: 'Nutrición deportiva avanzada para atletas. Periodización según tu calendario de competición.',
-    price: 89,
+    price: 69,
     period: 'mes',
     popular: false,
     features: [
@@ -55,16 +55,16 @@ const dietas = [
   },
   {
     id: 4,
-    name: 'Plan Keto Fighter',
+    name: 'Plan Fighter',
     description: 'Dieta cetogénica adaptada para deportes de combate. Control de peso sin perder potencia.',
-    price: 69,
+    price: 50,
     period: 'mes',
     popular: false,
     features: [
-      'Plan cetogénico 6 semanas',
+      'Plan  6 semanas',
       'Estrategias de corte de peso',
       'Rehidratación post-pesaje',
-      'Recetas keto-friendly',
+      'Recetas ',
       'Ajustes pre-competición',
       'Soporte WhatsApp',
     ],
