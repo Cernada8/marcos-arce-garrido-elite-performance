@@ -12,7 +12,7 @@ const dietas = [
     description: 'Dieta enfocada en pérdida de grasa manteniendo masa muscular. Ideal para conseguir un físico definido.',
     price: 39,
     period: 'mes',
-    popular: false,
+    popular: true,
     features: [
       'Plan nutricional de 4 semanas',
       'Lista de compras semanal',
@@ -27,7 +27,7 @@ const dietas = [
     description: 'Dieta hipercalórica para ganancia muscular limpia. Maximiza tus resultados en el gimnasio.',
     price: 49,
     period: 'mes',
-    popular: true,
+    popular: false,
     features: [
       'Plan nutricional de 8 semanas',
       'Timing de comidas optimizado',
