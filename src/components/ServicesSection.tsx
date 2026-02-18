@@ -2,6 +2,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Apple, Dumbbell, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import marcosEsquina from '@/assets/marcos_esquina.jpeg';
 
 const services = [
   {
@@ -16,7 +17,7 @@ const services = [
     title: 'Rutinas de Entrenamiento',
     description: 'Programas de entrenamiento personalizados para todos los niveles. Desde principiantes hasta atletas de competición.',
     href: '/rutinas',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80',
+    image: marcosEsquina,
   },
 ];
 
