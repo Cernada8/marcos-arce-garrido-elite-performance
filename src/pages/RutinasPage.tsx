@@ -25,7 +25,7 @@ const rutinas = [
     id: 2,
     name: 'Híbrido Pro',
     description: 'Combinación de fuerza y cardio. El programa más completo para transformar tu físico.',
-    price: 59,
+    price: 69,
     period: 'mes',
     popular: true,
     features: [
@@ -41,7 +41,7 @@ const rutinas = [
     id: 3,
     name: 'Fighter',
     description: 'Entrenamiento específico para artes marciales. Potencia, explosividad y resistencia.',
-    price: 69,
+    price: 79,
     period: 'mes',
     popular: false,
     features: [
@@ -57,7 +57,7 @@ const rutinas = [
     id: 4,
     name: 'Elite Performance',
     description: 'Programa premium con coaching personalizado. Para quienes buscan resultados excepcionales.',
-    price: 119,
+    price: 149,
     period: 'mes',
     popular: false,
     features: [
@@ -67,6 +67,38 @@ const rutinas = [
       'Análisis de rendimiento',
       'Ajustes semanales',
       'Acceso a comunidad VIP',
+    ],
+  },
+  {
+    id: 5,
+    name: 'Definición',
+    description: 'Quema grasa y marca músculo. Programa diseñado para conseguir un físico estético y definido.',
+    price: 39,
+    period: 'mes',
+    popular: false,
+    features: [
+      'Rutina 4 días/semana',
+      'Cardio HIIT incluido',
+      'Control de calorías',
+      'Ejercicios de tonificación',
+      'Seguimiento de progreso',
+      'Soporte por email',
+    ],
+  },
+  {
+    id: 6,
+    name: 'Volumen',
+    description: 'Gana masa muscular de forma efectiva. Programa enfocado en hipertrofia y aumento de fuerza.',
+    price: 39,
+    period: 'mes',
+    popular: false,
+    features: [
+      'Rutina 4 días/semana',
+      'Entrenamiento de hipertrofia',
+      'Guía de superávit calórico',
+      'Ejercicios compuestos',
+      'Progresión de cargas',
+      'Soporte por email',
     ],
   },
 ];
@@ -117,7 +149,7 @@ const RutinasPage = () => {
       {/* Plans Grid */}
       <section className="pb-32">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {rutinas.map((rutina, index) => (
               <motion.article
                 key={rutina.id}
