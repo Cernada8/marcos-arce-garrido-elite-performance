@@ -25,7 +25,7 @@ const rutinas = [
     id: 2,
     name: 'Híbrido Pro',
     description: 'Combinación de fuerza y cardio. El programa más completo para transformar tu físico.',
-    price: 69,
+    price: 59,
     period: 'mes',
     popular: true,
     features: [
@@ -41,7 +41,7 @@ const rutinas = [
     id: 3,
     name: 'Fighter',
     description: 'Entrenamiento específico para artes marciales. Potencia, explosividad y resistencia.',
-    price: 79,
+    price: 69,
     period: 'mes',
     popular: false,
     features: [
@@ -57,7 +57,7 @@ const rutinas = [
     id: 4,
     name: 'Elite Performance',
     description: 'Programa premium con coaching personalizado. Para quienes buscan resultados excepcionales.',
-    price: 149,
+    price: 119,
     period: 'mes',
     popular: false,
     features: [
