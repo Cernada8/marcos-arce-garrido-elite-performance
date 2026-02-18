@@ -25,7 +25,7 @@ const rutinas = [
     id: 2,
     name: 'Híbrido Pro',
     description: 'Combinación de fuerza y cardio. El programa más completo para transformar tu físico.',
-    price: 59,
+    price: 69,
     period: 'mes',
     popular: true,
     features: [
@@ -41,7 +41,7 @@ const rutinas = [
     id: 3,
     name: 'Fighter',
     description: 'Entrenamiento específico para artes marciales. Potencia, explosividad y resistencia.',
-    price: 69,
+    price: 79,
     period: 'mes',
     popular: false,
     features: [
@@ -57,7 +57,7 @@ const rutinas = [
     id: 4,
     name: 'Elite Performance',
     description: 'Programa premium con coaching personalizado. Para quienes buscan resultados excepcionales.',
-    price: 119,
+    price: 149,
     period: 'mes',
     popular: false,
     features: [
@@ -102,6 +102,13 @@ const rutinas = [
     ],
   },
 ];
+
+const WHATSAPP_NUMBER = '34676202423';
+
+const openWhatsApp = (planName: string) => {
+  const message = encodeURIComponent(`Hola, me gustaría contratar la rutina ${planName}. ¿Podrías darme más información?`);
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+};
 
 const RutinasPage = () => {
   useEffect(() => {
@@ -197,6 +204,7 @@ const RutinasPage = () => {
                 </ul>
 
                 <button 
+                  onClick={() => openWhatsApp(rutina.name)}
                   className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 ${
                     rutina.popular
                       ? 'btn-primary'

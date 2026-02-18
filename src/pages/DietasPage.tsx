@@ -71,6 +71,13 @@ const dietas = [
   },
 ];
 
+const WHATSAPP_NUMBER = '34676202423';
+
+const openWhatsApp = (planName: string) => {
+  const message = encodeURIComponent(`Hola, me gustaría contratar el ${planName}. ¿Podrías darme más información?`);
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+};
+
 const DietasPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -165,6 +172,7 @@ const DietasPage = () => {
                 </ul>
 
                 <button 
+                  onClick={() => openWhatsApp(dieta.name)}
                   className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 ${
                     dieta.popular
                       ? 'btn-primary'
